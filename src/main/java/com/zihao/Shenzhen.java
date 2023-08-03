@@ -12,35 +12,36 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 
 /**
- * @author zzh
+ * @author szq
  * Created on 2023-08-01
  * 使用Java+Selenium 自动框架实现
  */
-public class TuNiu {
+public class Shenzhen {
 
     public static void main(String[] args) {
         // 1、设置chrome浏览器驱动
-        System.setProperty("webdriver.chrome.driver", "/Users/shenzhenqiang/Downloads/chromedriver_mac_arm64/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/Users/shenzhenqiang/Downloads/chromedriver_mac_arm64 (2)/chromedriver");
+
         // 2、设置ChromeOptions
         ChromeOptions chromeOptions = initChromeOptions();
         // 3、初始化一个浏览器实例
         WebDriver webDriver = initWebDriver(chromeOptions);
         // 4、加载网页程序（某度）
-        webDriver.get("https://flight.tuniu.com/domestic/list/BJS_SHA_ST_1_0_0/?start=2023-08-09");
+        webDriver.get("https://www.shenzhenair.com/szair_B2C/flightsearch.action?orgCityCode=SZX&dstCityCode=PEK&hcType=DC&orgCity=%E6%B7%B1%E5%9C%B3&dstCity=%E5%8C%97%E4%BA%AC%E9%A6%96%E9%83%BD&orgDate=2023-08-13&dstDate=2023-08-13&easyFlyFlag=0&constId=");
 
-        List<WebElement> flightList = webDriver.findElements(By.className("J-flightlist"));
+        List<WebElement> flightList = webDriver.findElements(By.className("tblRouteList"));
         flightList.forEach(flight -> {
             WebElement flightLogo = flight.findElement(By.className("fl-logo"));
             // 航空公司
-            WebElement flightCompany = flightLogo.findElement(By.className("aircom"));
-            System.out.println(flightCompany);
+//            WebElement flightCompany = flightLogo.findElement(By.className("aircom"));
+            System.out.println("深圳航空");
             // 航班号
-            WebElement flightNumber = flightLogo.findElement(By.className("flihtnumber left"));
+            WebElement flightNumber = flightLogo.findElement(By.className("F20"));
             System.out.println(flightNumber);
 
-            WebElement flDepart = flight.findElement(By.className("fl-depart"));
+            WebElement flDepart = flight.findElement(By.className("F22"));
             // 起飞时间
-            WebElement departTime = flDepart.findElement(By.className("hours"));
+            WebElement departTime = flDepart.findElement(By.className("F22"));
             System.out.println(departTime);
             // 起飞机场
             WebElement departAirport = flDepart.findElement(By.className("airport"));
@@ -67,7 +68,7 @@ public class TuNiu {
 
 
             Flight flightObject = Flight.builder()
-                    .airCom(flightCompany.getText())
+//                    .airCom(flightCompany.getText())
                     .flightNumber(flightNumber.getText())
                     .departTime(departTime.getText())
                     .departAirport(departAirport.getText())

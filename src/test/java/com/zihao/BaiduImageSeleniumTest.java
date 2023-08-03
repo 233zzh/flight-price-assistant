@@ -18,7 +18,7 @@ public class BaiduImageSeleniumTest {
 
     public static void main(String[] args) {
         // 1、设置chrome浏览器驱动
-        System.setProperty("webdriver.chrome.driver", "/Users/zhangzhihao/Downloads/chromedriver-mac-arm64/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/Users/shenzhenqiang/Downloads/chromedriver_mac_arm64/chromedriver");
         // 2、设置ChromeOptions
         ChromeOptions chromeOptions = initChromeOptions();
         // 3、初始化一个浏览器实例

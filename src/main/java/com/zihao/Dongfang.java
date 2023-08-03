@@ -12,35 +12,36 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 
 /**
- * @author zzh
+ * @author szq
  * Created on 2023-08-01
  * 使用Java+Selenium 自动框架实现
  */
-public class TuNiu {
+public class Dongfang {
 
     public static void main(String[] args) {
         // 1、设置chrome浏览器驱动
-        System.setProperty("webdriver.chrome.driver", "/Users/shenzhenqiang/Downloads/chromedriver_mac_arm64/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/Users/shenzhenqiang/Downloads/chromedriver-mac-arm64/chromedriver");
+
         // 2、设置ChromeOptions
         ChromeOptions chromeOptions = initChromeOptions();
         // 3、初始化一个浏览器实例
         WebDriver webDriver = initWebDriver(chromeOptions);
         // 4、加载网页程序（某度）
-        webDriver.get("https://flight.tuniu.com/domestic/list/BJS_SHA_ST_1_0_0/?start=2023-08-09");
+        webDriver.get("https://www.ceair.com/shopping?searchKey=JTdCJTIydHJhdmVsVHlwZSUyMiUzQSUyMm9uZXdheSUyMiUyQyUyMnBhc3Nlbmdlck51bSUyMiUzQSUyMjElMkMwJTJDMCUyMiUyQyUyMmRlcENpdHklMjIlM0ElMjJTSEElMjIlMkMlMjJhcnJDaXR5JTIyJTNBJTIyQkpTJTIyJTJDJTIyZGVwVmFsdWVzJTIyJTNBJTIyU0hBJTJDUFZHJTIyJTJDJTIyYXJyVmFsdWVzJTIyJTNBJTIyUEVLJTJDUEtYJTIyJTJDJTIyZGVwQ2l0eU5hbWUlMjIlM0ElMjIlRTQlQjglOEElRTYlQjUlQjclMjIlMkMlMjJhcnJDaXR5TmFtZSUyMiUzQSUyMiVFNSU4QyU5NyVFNCVCQSVBQyUyMiUyQyUyMmRhdGUlMjIlM0ElMjIyMDIzLTA4LTAyJTIyJTJDJTIyY2FiaW5DbGFzcyUyMiUzQSUyMkFMTCUyMiUyQyUyMnBheVdheSUyMiUzQSUyMm1vbmV5JTIyJTJDJTIyZGVwU2VsZWN0VmFsdWUlMjIlM0ElMjJTSEElMkNQVkclMjIlMkMlMjJhcnJTZWxlY3RWYWx1ZSUyMiUzQSUyMlBFSyUyQ1BLWCUyMiUyQyUyMmRlcExhYmVsJTIyJTNBJTIyJTIyJTJDJTIyYXJyTGFiZWwlMjIlM0ElMjIlMjIlMkMlMjJpc0FyckNpdHklMjIlM0F0cnVlJTJDJTIyaXNEZXBDaXR5JTIyJTNBdHJ1ZSUyQyUyMmRlcENuJTIyJTNBJTIyQ04lMjIlMkMlMjJ0JTIyJTNBMTY5MDk4ODU5ODk3OCU3RA%3D%3DENCODEKEY");
 
-        List<WebElement> flightList = webDriver.findElements(By.className("J-flightlist"));
+        List<WebElement> flightList = webDriver.findElements(By.className("shopping-thumb-inner-container flex-col shoppingThumb0 shopping-thumbnail-container can-click"));
         flightList.forEach(flight -> {
             WebElement flightLogo = flight.findElement(By.className("fl-logo"));
             // 航空公司
-            WebElement flightCompany = flightLogo.findElement(By.className("aircom"));
-            System.out.println(flightCompany);
+//            WebElement flightCompany = flightLogo.findElement(By.className("aircom"));
+            System.out.println("东方航空");
             // 航班号
-            WebElement flightNumber = flightLogo.findElement(By.className("flihtnumber left"));
+            WebElement flightNumber = flightLogo.findElement(By.className("flight-info-inner-container flex al-center border-right"));
             System.out.println(flightNumber);
 
-            WebElement flDepart = flight.findElement(By.className("fl-depart"));
+            WebElement flDepart = flight.findElement(By.className("F22"));
             // 起飞时间
-            WebElement departTime = flDepart.findElement(By.className("hours"));
+            WebElement departTime = flDepart.findElement(By.className("F22"));
             System.out.println(departTime);
             // 起飞机场
             WebElement departAirport = flDepart.findElement(By.className("airport"));
@@ -67,7 +68,7 @@ public class TuNiu {
 
 
             Flight flightObject = Flight.builder()
-                    .airCom(flightCompany.getText())
+//                    .airCom(flightCompany.getText())
                     .flightNumber(flightNumber.getText())
                     .departTime(departTime.getText())
                     .departAirport(departAirport.getText())
