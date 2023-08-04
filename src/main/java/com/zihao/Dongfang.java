@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -28,6 +29,11 @@ public class Dongfang {
         WebDriver webDriver = initWebDriver(chromeOptions);
         // 4、加载网页程序（某度）
         webDriver.get("https://www.ceair.com/shopping?searchKey=JTdCJTIydHJhdmVsVHlwZSUyMiUzQSUyMm9uZXdheSUyMiUyQyUyMnBhc3Nlbmdlck51bSUyMiUzQSUyMjElMkMwJTJDMCUyMiUyQyUyMmRlcENpdHklMjIlM0ElMjJTSEElMjIlMkMlMjJhcnJDaXR5JTIyJTNBJTIyQkpTJTIyJTJDJTIyZGVwVmFsdWVzJTIyJTNBJTIyU0hBJTJDUFZHJTIyJTJDJTIyYXJyVmFsdWVzJTIyJTNBJTIyUEVLJTJDUEtYJTIyJTJDJTIyZGVwQ2l0eU5hbWUlMjIlM0ElMjIlRTQlQjglOEElRTYlQjUlQjclMjIlMkMlMjJhcnJDaXR5TmFtZSUyMiUzQSUyMiVFNSU4QyU5NyVFNCVCQSVBQyUyMiUyQyUyMmRhdGUlMjIlM0ElMjIyMDIzLTA4LTAyJTIyJTJDJTIyY2FiaW5DbGFzcyUyMiUzQSUyMkFMTCUyMiUyQyUyMnBheVdheSUyMiUzQSUyMm1vbmV5JTIyJTJDJTIyZGVwU2VsZWN0VmFsdWUlMjIlM0ElMjJTSEElMkNQVkclMjIlMkMlMjJhcnJTZWxlY3RWYWx1ZSUyMiUzQSUyMlBFSyUyQ1BLWCUyMiUyQyUyMmRlcExhYmVsJTIyJTNBJTIyJTIyJTJDJTIyYXJyTGFiZWwlMjIlM0ElMjIlMjIlMkMlMjJpc0FyckNpdHklMjIlM0F0cnVlJTJDJTIyaXNEZXBDaXR5JTIyJTNBdHJ1ZSUyQyUyMmRlcENuJTIyJTNBJTIyQ04lMjIlMkMlMjJ0JTIyJTNBMTY5MDk4ODU5ODk3OCU3RA%3D%3DENCODEKEY");
+
+        Options manage = webDriver.manage();
+        chromeOptions.addArguments("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+//        manage.addCookie();
+
 
         List<WebElement> flightList = webDriver.findElements(By.className("shopping-thumb-inner-container flex-col shoppingThumb0 shopping-thumbnail-container can-click"));
         flightList.forEach(flight -> {
