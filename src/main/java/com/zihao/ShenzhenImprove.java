@@ -2,7 +2,6 @@ package com.zihao;
 
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -17,7 +16,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
  * Created on 2023-08-01
  * 使用Java+Selenium 自动框架实现
  */
-public class Shenzhen {
+public class ShenzhenImprove {
 
     public static void main(String[] args) throws Exception {
 
@@ -61,7 +60,7 @@ public class Shenzhen {
 
         System.out.println("深圳航空");
 
-        List<WebElement> flightList = webDriver.findElements(By.cssSelector("#flightInfoListDC > table > tbody > tr"));
+        List<WebElement> flightList = webDriver.findElements(By.className("flightTr"));
         System.out.println(flightList.size());
         flightList.forEach(flight -> {
             String judge = flight.getAttribute("class");
@@ -70,83 +69,69 @@ public class Shenzhen {
             if (!judge.equals("flightTr")) {
                 return;
             }
-
+            List<WebElement> td = flight.findElements(By.xpath("./td"));
             //             航班号
-            WebElement flightNumber1 = flight.findElement(By.xpath("//*[@id=\"" + id + "\"]" + "/td[1]/div[1]"));
+            WebElement flightNumber1 = td.get(0).findElement(By.className("F20"));
             System.out.println("航班号:" + flightNumber1.getText());
 
-            WebElement departTime = flight.findElement(By.xpath("//*[@id=\"" + id + "\"]" + "/td[1]/div[2]"));
+            WebElement departTime = td.get(0).findElement(By.className("F22"));
             System.out.println("起飞落地时间: " + departTime.getText());
 
             // 起飞机场
-            WebElement departAirport =
-                    //                    #flightInfogo1 > td.flightInfoForm > div.F16.detailInfo.tipso_style
-                    //*[@id="flightInfogo1"]/td[1]/div[3]
-                    flight.findElement(By.xpath("//*[@id=\"" + id + "\"]" + "/td[1]/div[3]"));
-            System.out.println("机场起点: " + departAirport.getAttribute("row1-from"));
-            // 如果有中转
-            if(Objects.nonNull(departAirport.getAttribute("row2-info"))) {
-                System.out.println(departAirport.getAttribute("row2-info"));
-                System.out.println("机场终点：" + departAirport.getAttribute("row3-to"));
-            } else {  //否则没有中转
+            WebElement departAirport = td.get(0).findElement(By.className("F16"));
+            try {
+                // 出现中转不会异常
+                td.get(0).findElement(By.className("F20")).findElement(By.className("tipsoTing")).findElement(By.className("routename"));
+
+                System.out.println("机场起点: " + departAirport.getAttribute("row1-from"));
+                // 如果有中转
+                    System.out.println(departAirport.getAttribute("row2-info"));
+                    System.out.println("机场终点：" + departAirport.getAttribute("row3-to"));
+
+            }catch (Exception e) {
+                System.out.println("机场起点: " + departAirport.getAttribute("row1-from"));
+                // 如果没有中转
                 System.out.println("机场终点： " + departAirport.getAttribute("row1-to"));
+
             }
 
             try {
-                WebElement headPrice = flight.findElement(By.cssSelector("td:nth-child(2) > div.F22.notHover"));
+                WebElement headPrice = td.get(1).findElement(By.className("F22"));
                 System.out.println("头等舱价格:" + headPrice.getText());
-                WebElement headSeatNumbers = flight.findElement(By.cssSelector("td:nth-child(2) > div.F16.notHover"));
+                WebElement headSeatNumbers = td.get(1).findElement(By.className("F16"));
                 System.out.println("头等舱座位:" + headSeatNumbers.getText());
             } catch (Exception e) {
                 System.out.println("————————————没有头等舱——————————————");
             }
             try {
-                WebElement superPrice = flight.findElement(By.cssSelector("td:nth-child(3) > div.F22.notHover"));
+                WebElement superPrice = td.get(2).findElement(By.className("F22"));
                 System.out.println("超值公务舱价格:" + superPrice.getText());
-                WebElement superSeatNumbers = flight.findElement(By.cssSelector("td:nth-child(3) > div.F16.notHover"));
+                WebElement superSeatNumbers = td.get(2).findElement(By.className("F16"));
                 System.out.println("超值公务舱座位:" + superSeatNumbers.getText());
             } catch (Exception e) {
                 System.out.println("————————————没有超值公务舱——————————————");
             }
             try {
-                WebElement comfortablePrice = flight.findElement(By.cssSelector("td:nth-child(4) > div.F22.notHover"));
+                WebElement comfortablePrice = td.get(3).findElement(By.className("F22"));
                 System.out.println("舒适经济舱价格:" + comfortablePrice.getText());
-                WebElement comfortableSeatNumbers = flight.findElement(By.cssSelector("td:nth-child(4) > div.F16.notHover"));
+                WebElement comfortableSeatNumbers = td.get(3).findElement(By.className("F16"));
                 System.out.println("舒适经济舱座位:" + comfortableSeatNumbers.getText());
             } catch (Exception e) {
                 System.out.println("————————————没有舒适经济舱——————————————");
             }
             try {
-                WebElement cheapPrice = flight.findElement(By.cssSelector("td:nth-child(5) > div.F22.notHover"));
+                WebElement cheapPrice = td.get(4).findElement(By.className("F22"));
                 System.out.println("经济舱价格:" + cheapPrice.getText());
 
-                WebElement cheapSeatNumbers = flight.findElement(By.cssSelector("td:nth-child(5) > div.F16.notHover"));
+                WebElement cheapSeatNumbers = td.get(4).findElement(By.className("F16"));
                 System.out.println("经济舱座位:" + cheapSeatNumbers.getText());
             } catch (Exception e) {
                 System.out.println("————————————没有经济舱——————————————");
             }
             System.out.println("-------------------------------------------------------------");
-            //*[@id="flightInfogo0"]/td[3]/div[2]
-            //            // 到达时间
-            //            WebElement arriveTime = flArrive.findElement(By.className("hours")).findElement(By.cssSelector("span"));
-            //            System.out.println(arriveTime);
-            //            // 到达机场
-            //            WebElement arriveAirport = flArrive.findElement(By.className("airport"));
-            //            System.out.println(arriveAirport);
 
-            //            WebElement flCenter = flight.findElement(By.className("fl-center"));
-            //            // 飞行时间
-            //            WebElement durationTime = flCenter.findElement(By.className("durationTime"));
-            //            System.out.println(durationTime);
-            //
-            //            WebElement price = flight.findElement(By.className("price"));
-            //            // 价格
-            //            WebElement priceNum = price.findElement(By.className("num"));
-            //            System.out.println(priceNum);
-
-            //
             //            Flight flightObject = Flight.builder()
-            ////                    .airCom(flightCompany.getText())
+            //                    .airCom(flightCompany.getText())
             //                    .flightNumber(flightNumber.getText())
             //                    .departTime(departTime.getText())
             //                    .departAirport(departAirport.getText())
